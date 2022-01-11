@@ -1,0 +1,21 @@
+//file:noinspection GroovyAssignabilityCheck
+//file:noinspection GrUnresolvedAccess
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+plugins {
+  id 'groovy'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation(
+    gradleApi()
+  )
+}

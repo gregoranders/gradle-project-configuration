@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'github-pages', group: :jekyll_plugins
+gem 'jekyll-theme-hacker'
+
+group :jekyll_plugins do
+  gem 'jekyll-feed'
+  gem 'jekyll-timeago'
+  gem 'jekyll-asciidoc'
+  gem 'jekyll-seo-tag'
+end

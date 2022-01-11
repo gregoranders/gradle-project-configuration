@@ -1,0 +1,133 @@
+name: Main CI
+on:
+  push:
+    branches:
+      - main
+env:
+  CI: true
+  GITHUB_BRANCH: ${{ github.ref }}
+  GITHUB_HEAD_REF: ${{ github.head_ref }}
+  GITHUB_BASE_REF: ${{ github.base_ref }}
+  GITHUB_COMMIT: ${{ github.sha }}
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java: [ '17.0.1' ]
+      fail-fast: false
+    name: ${{ matrix.os }} JDK ${{ matrix.java }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v2.5.0
+        with:
+          distribution: 'temurin'
+          cache: 'gradle'
+          java-version: ${{ matrix.java }}
+      - name: Echo JAVA_HOME
+        run: echo $JAVA_HOME
+      - name: Echo JAVA version
+        run: java --version
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Verify Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Echo Gradle version
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --version
+      - name: Execute clean
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --info --stacktrace clean
+      - name: Execute check
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --info --stacktrace check
+      - name: Execute build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --info --stacktrace build
+      - name: Sonarcube analyze
+        uses: gradle/gradle-build-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          arguments: --info --stacktrace sonarqube
+      - name: Upload reports as an artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports-jdk${{ matrix.java }}-${{ matrix.os }}
+          path: build/reports
+          retention-days: 2
+      - name: Upload test results as an artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: junit-results
+          path: build/test-results
+          retention-days: 1
+      - name: Get cached gems
+        uses: actions/cache@v2.1.7
+        with:
+          path: docs/_gh-pages
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Copy docs
+        run: |
+          mkdir -p docs/_gh-pages
+          sudo apt update
+          sudo apt install bundler
+          cp build/reports/spock/* docs/_gh-pages
+          cp docs/gh-pages/* docs/_gh-pages
+          cd docs/_gh-pages
+          bundle update
+          bundle exec github-pages build
+          touch _site/.nojekyll
+      - name: Deploy to gh-pages
+        if: matrix.os == 'ubuntu-latest'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_gh-pages/_site
+          enable_jekyll: false
+
+  publish-test-results:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java: [ '17.0.1' ]
+      fail-fast: false
+    name: Publish Unit Tests Results
+    needs: build
+    if: always()
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: junit-results
+          path: artifact
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: artifact/**/*.xml

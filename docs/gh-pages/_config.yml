@@ -1,0 +1,23 @@
+title: JetBrains IntelliJ Gradle Dependencies Plugin
+author: Gregor Anders
+email: gregor.anders@gmail.com
+timezone: 'Europe/Berlin'
+description: Specification run results
+baseurl: '/gradle-project-configuration'
+url: 'https://gregoranders.github.io'
+theme: jekyll-theme-hacker
+github_username: gregoranders
+plugins:
+  - jekyll-feed
+  - jekyll-timeago
+  - jekyll-asciidoc
+  - jekyll-seo-tag
+markdown: kramdown
+kramdown:
+  auto_ids: true
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock

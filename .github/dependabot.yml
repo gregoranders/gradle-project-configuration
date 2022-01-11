@@ -1,0 +1,26 @@
+version: 2
+updates:
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    commit-message:
+      prefix: 'github-actions'
+    assignees:
+      - 'gregoranders'
+    target-branch: 'main'
+
+  - package-ecosystem: 'gradle'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    commit-message:
+      prefix: 'gradle'
+    assignees:
+      - 'gregoranders'
+    target-branch: 'main'

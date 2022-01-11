@@ -1,0 +1,108 @@
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'groovy'
+  id 'idea'
+  id 'checkstyle'
+  id 'pmd'
+  id 'jacoco'
+  id 'maven-publish'
+  id 'signing'
+  id 'project-report'
+  id 'build-dashboard'
+  id 'com.github.spotbugs' version '5.0.4'
+  id 'org.owasp.dependencycheck' version '6.5.2.1'
+  id 'org.javamodularity.moduleplugin' version '1.8.10'
+  id 'org.sonarqube' version '3.3'
+  id 'projectConfiguration'
+}
+
+def javaVersion = JavaVersion.VERSION_17
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+java {
+  sourceCompatibility = javaVersion
+  targetCompatibility = javaVersion
+}
+
+idea {
+  module {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+
+  project {
+    vcs = 'Git'
+    jdkName = "jdk-${javaVersion}"
+    languageLevel = javaVersion
+  }
+}
+
+jar {
+  def manifestAttributes = [
+    'Created-By'              : "Gradle ${gradle.gradleVersion}",
+    'Specification-Title'     : "${project.property('description')}",
+    'Specification-Version'   : project.version,
+    'Specification-Vendor'    : "${rootProject.property('author')} <${project.property('email')}>",
+    'Implementation-Title'    : project.property('description'),
+    'Implementation-Version'  : project.version,
+    'Implementation-Vendor'   : "${rootProject.property('author')} <${project.property('email')}>",
+    'Implementation-Vendor-Id': "${rootProject.property('author')} <${project.property('email')}>",
+  ]
+
+  manifest {
+    attributes(manifestAttributes)
+  }
+}
+
+test {
+  moduleOptions {
+    runOnClasspath = true
+  }
+  systemProperty 'com.athaydes.spockframework.report.projectName', "${project.group}.${project.name}"
+  systemProperty 'com.athaydes.spockframework.report.projectVersion', "${project.version}"
+}
+
+project.modularity.patchModule('gradle-api', "groovy-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-ant-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-astbuilder-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-console-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-datetime-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-dateutil-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-groovydoc-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-json-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-nio-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-sql-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-templates-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-test-${property('groovyVersion')}.jar")
+project.modularity.patchModule('gradle-api', "groovy-xml-${property('groovyVersion')}.jar")
+
+project.modularity.patchModule('gradle-api', "javaparser-core-${property('javaparserCoreVersion')}.jar")
+
+dependencies {
+
+  implementation(
+    gradleApi(),
+  )
+
+  testImplementation(
+    localGroovy(),
+    [group: 'io.github.joke', name: 'spock-mockable', version: property('spockMockableVersion')],
+  )
+
+  testImplementation(
+    [group: 'org.spockframework', name: 'spock-core', version: property('spockVersion')],
+  ) {
+    exclude group: 'org.codehaus.groovy'
+  }
+
+  testRuntimeOnly(
+    [group: 'com.athaydes', name: 'spock-reports', version: property('spockReportsVersion')]
+  ) {
+    transitive = false
+  }
+}
