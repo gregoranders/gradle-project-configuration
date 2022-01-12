@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ '8', '17' ]
+        java: [ '8' ]
       fail-fast: false
     name: ${{ matrix.os }} JDK ${{ matrix.java }}
     steps:
@@ -33,12 +33,6 @@ jobs:
         run: echo $JAVA_HOME
       - name: Echo JAVA version
         run: java -version
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.7
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v2.1.7
         with:
@@ -63,14 +57,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: --info --stacktrace build
-      - name: Sonarcube analyze
-        if: matrix.java == '17'
-        uses: gradle/gradle-build-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          arguments: --info --stacktrace sonarqube
       - name: Upload reports as an artifact
         if: always()
         uses: actions/upload-artifact@v2
@@ -79,7 +65,7 @@ jobs:
           path: build/reports
           retention-days: 2
       - name: Upload test results as an artifact
-        if: ${{ always() && matrix.java == '17' }}
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: junit-results
