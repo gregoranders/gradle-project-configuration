@@ -21,21 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-//file:noinspection GrUnresolvedAccess
-report {
-    issueNamePrefix ''
-    issueUrlPrefix 'https://github.com/gregoranders/gradle-project-configuration/issues/'
-}
+package io.github.gregoranders.gradle.project
 
-spockReports {
-    set 'com.athaydes.spockframework.report.IReportCreator': 'com.athaydes.spockframework.report.template.TemplateReportCreator'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.specTemplateFile': '/spockreporttemplates/spec-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.reportFileExtension': 'md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryTemplateFile': '/spockreporttemplates/summary-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryFileName': 'index.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.enabled': true
+import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.TaskAction
 
-    set 'com.athaydes.spockframework.report.aggregatedJsonReportDir': 'build/results/spock'
-    set 'com.athaydes.spockframework.report.showCodeBlocks': true
-    set 'com.athaydes.spockframework.report.outputDir': 'build/reports/spock'
+class CPDTask extends DefaultTask {
+
+    @TaskAction
+    def cpd() {
+        def cpdMinimumTokenCount = project.rootProject.hasProperty('cpdMinimumTokenCount') ? project.rootProject.property('cpdMinimumTokenCount') : 10
+        File reportPath = project.file("${project.buildDir}/reports/cpd")
+        reportPath.mkdirs()
+        ant.taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
+            classpath: project.configurations.pmd.asPath)
+        ant.cpd(minimumTokenCount: cpdMinimumTokenCount, format: 'xml',
+            outputFile: new File(reportPath, 'main.xml')) {
+            ant.fileset(dir: 'src/main/java') {
+                include(name: '**/*.java')
+            }
+        }
+    }
 }

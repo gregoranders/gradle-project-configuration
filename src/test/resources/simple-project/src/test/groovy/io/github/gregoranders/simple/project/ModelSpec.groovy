@@ -21,21 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-//file:noinspection GrUnresolvedAccess
-report {
-    issueNamePrefix ''
-    issueUrlPrefix 'https://github.com/gregoranders/gradle-project-configuration/issues/'
-}
+package io.github.gregoranders.simple.project
 
-spockReports {
-    set 'com.athaydes.spockframework.report.IReportCreator': 'com.athaydes.spockframework.report.template.TemplateReportCreator'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.specTemplateFile': '/spockreporttemplates/spec-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.reportFileExtension': 'md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryTemplateFile': '/spockreporttemplates/summary-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryFileName': 'index.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.enabled': true
+import spock.lang.Specification
+import spock.lang.Subject
 
-    set 'com.athaydes.spockframework.report.aggregatedJsonReportDir': 'build/results/spock'
-    set 'com.athaydes.spockframework.report.showCodeBlocks': true
-    set 'com.athaydes.spockframework.report.outputDir': 'build/reports/spock'
+class ModelSpec extends Specification {
+
+    def 'should return name'() {
+        given: 'a unit under test with the name of "name"'
+            @Subject
+            def testSubject = new Model('name')
+        expect: 'expect name to be "name"'
+            testSubject.getName() == 'name'
+    }
 }

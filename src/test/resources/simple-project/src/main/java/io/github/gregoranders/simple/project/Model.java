@@ -21,21 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-//file:noinspection GrUnresolvedAccess
-report {
-    issueNamePrefix ''
-    issueUrlPrefix 'https://github.com/gregoranders/gradle-project-configuration/issues/'
-}
+package io.github.gregoranders.simple.project;
 
-spockReports {
-    set 'com.athaydes.spockframework.report.IReportCreator': 'com.athaydes.spockframework.report.template.TemplateReportCreator'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.specTemplateFile': '/spockreporttemplates/spec-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.reportFileExtension': 'md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryTemplateFile': '/spockreporttemplates/summary-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryFileName': 'index.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.enabled': true
+public final class Model {
 
-    set 'com.athaydes.spockframework.report.aggregatedJsonReportDir': 'build/results/spock'
-    set 'com.athaydes.spockframework.report.showCodeBlocks': true
-    set 'com.athaydes.spockframework.report.outputDir': 'build/reports/spock'
+    private final String name;
+
+    public Model(final String aName) {
+        name = aName;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

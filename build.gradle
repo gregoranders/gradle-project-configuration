@@ -1,6 +1,7 @@
 plugins {
   id 'java'
   id 'java-library'
+  id 'java-gradle-plugin'
   id 'groovy'
   id 'idea'
   id 'checkstyle'
@@ -10,14 +11,15 @@ plugins {
   id 'signing'
   id 'project-report'
   id 'build-dashboard'
+  id 'com.gradle.plugin-publish' version '0.19.0'
   id 'com.github.spotbugs' version '5.0.4'
   id 'org.owasp.dependencycheck' version '6.5.2.1'
-  id 'org.javamodularity.moduleplugin' version '1.8.10'
   id 'org.sonarqube' version '3.3'
-  id 'projectConfiguration'
 }
 
-def javaVersion = JavaVersion.VERSION_17
+def javaVersion = JavaVersion.VERSION_1_8
+
+group = project.property('group')
 
 repositories {
   mavenCentral()
@@ -27,6 +29,24 @@ repositories {
 java {
   sourceCompatibility = javaVersion
   targetCompatibility = javaVersion
+
+  withSourcesJar()
+}
+
+jar {
+  def manifestAttributes = [
+    'Created-By'              : "Gradle ${project.gradle.gradleVersion}",
+    'Specification-Title'     : "${project.description}",
+    'Specification-Version'   : "${project.version}",
+    'Specification-Vendor'    : "${project.property('author')} <${project.property('email')}>",
+    'Implementation-Title'    : "${project.description}",
+    'Implementation-Version'  : "${project.version}",
+    'Implementation-Vendor'   : "${project.property('author')} <${project.property('email')}>",
+    'Implementation-Vendor-Id': "${project.property('author')} <${project.property('email')}>",
+  ]
+  manifest {
+    attributes(manifestAttributes)
+  }
 }
 
 idea {
@@ -42,46 +62,240 @@ idea {
   }
 }
 
-jar {
-  def manifestAttributes = [
-    'Created-By'              : "Gradle ${gradle.gradleVersion}",
-    'Specification-Title'     : "${project.property('description')}",
-    'Specification-Version'   : project.version,
-    'Specification-Vendor'    : "${rootProject.property('author')} <${project.property('email')}>",
-    'Implementation-Title'    : project.property('description'),
-    'Implementation-Version'  : project.version,
-    'Implementation-Vendor'   : "${rootProject.property('author')} <${project.property('email')}>",
-    'Implementation-Vendor-Id': "${rootProject.property('author')} <${project.property('email')}>",
-  ]
+checkstyle {
+  toolVersion = property('checkstyleVersion')
+  ignoreFailures = false
+}
 
-  manifest {
-    attributes(manifestAttributes)
+pmd {
+  consoleOutput = true
+  incrementalAnalysis = true
+  toolVersion = property('pmdVersion')
+  ignoreFailures = false
+  ruleSets = []
+  ruleSetConfig = resources.text.fromFile('config/pmd/pmd-rules.xml')
+}
+
+spotbugs {
+  toolVersion = property('spotbugsVersion')
+  ignoreFailures = false
+  effort = 'max'
+  reportLevel = 'low'
+  //noinspection GroovyAssignabilityCheck
+  excludeFilter = rootProject.file('config/spotbugs/excludeFilter.xml')
+}
+
+spotbugsMain {
+  reports {
+    html {
+      outputLocation = project.layout.buildDirectory.file('reports/spotbugs/main/spotbugs.html').get().asFile
+      stylesheet = 'fancy-hist.xsl'
+    }
+    xml {
+      outputLocation = project.layout.buildDirectory.file('reports/spotbugs/main/spotbugs.xml').get().asFile
+    }
+  }
+}
+
+spotbugsTest.enabled = false
+
+jacoco {
+  toolVersion = property('jacocoVersion')
+}
+
+jacocoTestReport {
+  dependsOn project.tasks.test
+  reports {
+    xml.required = true
+    csv.required = false
+    html.required = true
+  }
+}
+
+jacocoTestCoverageVerification {
+  violationRules {
+    rule {
+      limit {
+        counter = 'INSTRUCTION'
+        minimum = 0.7
+      }
+      limit {
+        counter = 'BRANCH'
+        minimum = 0.7
+      }
+      limit {
+        counter = 'LINE'
+        minimum = 0.7
+      }
+      limit {
+        counter = 'METHOD'
+        minimum = 0.7
+      }
+      limit {
+        counter = 'CLASS'
+        minimum = 0.7
+      }
+    }
+  }
+}
+
+dependencyCheck {
+  autoUpdate = true
+  failBuildOnCVSS = 1
+  cveValidForHours = 1
+  format = 'ALL'
+  outputDirectory = project.layout.buildDirectory.dir('reports/dependency-check').get().asFile
+  suppressionFile = project.rootProject.file('config/dependency-check/suppressions.xml')
+  //noinspection GroovyAssignabilityCheck
+  analyzers {
+    experimentalEnabled = true
+    archiveEnabled = true
+    jarEnabled = true
+    centralEnabled = true
+    nexusEnabled = false
+    nexusUsesProxy = false
+    nuspecEnabled = false
+    assemblyEnabled = false
+    msbuildEnabled = false
+    golangDepEnabled = false
+    golangModEnabled = false
+    cocoapodsEnabled = false
+    swiftEnabled = false
+    swiftPackageResolvedEnabled = false
+    bundleAuditEnabled = false
+    pyDistributionEnabled = false
+    pyPackageEnabled = false
+    rubygemsEnabled = false
+    opensslEnabled = false
+    cmakeEnabled = false
+    autoconfEnabled = false
+    composerEnabled = false
+    cpanEnabled = false
+    nodeEnabled = false
+  }
+}
+
+publishing {
+  publications {
+    //noinspection GroovyAssignabilityCheck
+    mavenJava(MavenPublication) {
+      //noinspection GroovyAssignabilityCheck
+      from project.components.java
+      pom {
+        //noinspection GroovyAssignabilityCheck
+        name = project.name
+        description = project.description
+        //noinspection GroovyAssignabilityCheck
+        url = project.property('url')
+        licenses {
+          //noinspection GroovyAssignabilityCheck
+          license {
+            //noinspection GroovyAssignabilityCheck
+            name = project.property('license')
+            //noinspection GroovyAssignabilityCheck
+            url = project.property('licenseUrl')
+          }
+        }
+        developers {
+          developer {
+            //noinspection GroovyAssignabilityCheck
+            id = project.property('authorId')
+            //noinspection GroovyAssignabilityCheck
+            name = project.property('author')
+            //noinspection GroovyAssignabilityCheck
+            email = project.property('email')
+          }
+        }
+        scm {
+          //noinspection GroovyAssignabilityCheck
+          connection = "scm:git:git://${project.property('scmUrl')}"
+          //noinspection GroovyAssignabilityCheck
+          developerConnection = "scm:git:ssh://${project.property('scmUrl')}"
+          //noinspection GroovyAssignabilityCheck
+          url = project.property('url')
+        }
+      }
+    }
+  }
+
+  repositories {
+    maven {
+      url = project.layout.buildDirectory.dir('repos')
+    }
+    if (System.getenv('CI') == 'true') {
+      maven {
+        name = 'GitHubPackages'
+        url = property('ghpUrl')
+        credentials {
+          username = System.getenv('GITHUB_ACTOR')
+          password = System.getenv('GITHUB_TOKEN')
+        }
+      }
+    }
+  }
+}
+
+signing {
+  if (System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
+    useInMemoryPgpKeys(System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
+    sign publishing.publications
+  }
+}
+
+gradlePlugin {
+  plugins {
+    projectConfigurationPlugin {
+      id = 'io.github.gregoranders.project-configuration'
+      implementationClass = 'io.github.gregoranders.gradle.project.ProjectConfigurationPlugin'
+    }
+  }
+}
+
+pluginBundle {
+  website = property('url')
+  vcsUrl = property('url')
+
+  description = project.description
+
+  mavenCoordinates {
+    groupId = project.group
+    artifactId = project.name
+    version = project.version
+  }
+
+  plugins {
+    projectConfigurationPlugin {
+      //noinspection GroovyAssignabilityCheck
+      displayName = property('description')
+      tags = ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
+    }
   }
 }
 
 test {
-  moduleOptions {
-    runOnClasspath = true
+  doFirst {
+    def version = project.extensions.findByType(JacocoPluginExtension.class).toolVersion
+    def configuration = configurations.create('jacocoRuntime').setVisible(false).setDescription('JaCoCo agent runtime')
+    configuration.dependencies.add(project.dependencies.create("org.jacoco:org.jacoco.agent:$version:runtime"))
+    def runtimeAsFile = project.configurations.jacocoRuntime.resolve()[0]
+    //noinspection GroovyAssignabilityCheck
+    def jvmArgs = "-javaagent:${runtimeAsFile}=destfile=${project.layout.buildDirectory.file('jacoco/test.exec').get().toString()}"
+    def file = project.layout.buildDirectory.file('resources/test/jacocoAgentJVMArgs.properties').get().asFile
+    file.write(jvmArgs)
+  }
+  useJUnitPlatform()
+  testLogging {
+    events 'passed', 'skipped', 'failed'
   }
   systemProperty 'com.athaydes.spockframework.report.projectName', "${project.group}.${project.name}"
   systemProperty 'com.athaydes.spockframework.report.projectVersion', "${project.version}"
+  finalizedBy project.tasks.jacocoTestReport
 }
 
-project.modularity.patchModule('gradle-api', "groovy-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-ant-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-astbuilder-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-console-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-datetime-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-dateutil-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-groovydoc-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-json-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-nio-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-sql-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-templates-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-test-${property('groovyVersion')}.jar")
-project.modularity.patchModule('gradle-api', "groovy-xml-${property('groovyVersion')}.jar")
-
-project.modularity.patchModule('gradle-api', "javaparser-core-${property('javaparserCoreVersion')}.jar")
+check {
+  dependsOn project.tasks.jacocoTestCoverageVerification
+  dependsOn project.tasks.dependencyCheckAnalyze
+}
 
 dependencies {
 
@@ -90,8 +304,8 @@ dependencies {
   )
 
   testImplementation(
+    gradleTestKit(),
     localGroovy(),
-    [group: 'io.github.joke', name: 'spock-mockable', version: property('spockMockableVersion')],
   )
 
   testImplementation(
