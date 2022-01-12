@@ -266,7 +266,7 @@ pluginBundle {
   plugins {
     projectConfigurationPlugin {
       //noinspection GroovyAssignabilityCheck
-      displayName = property('description')
+      displayName = 'JAVA Project Configuration'
       tags = ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
     }
   }

@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ '8' ]
+        java: [ '8', '17' ]
       fail-fast: false
     name: ${{ matrix.os }} JDK ${{ matrix.java }}
     steps:
@@ -64,6 +64,7 @@ jobs:
         with:
           arguments: --info --stacktrace build
       - name: Sonarcube analyze
+        if: matrix.java == '17'
         uses: gradle/gradle-build-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,13 +79,14 @@ jobs:
           path: build/reports
           retention-days: 2
       - name: Upload test results as an artifact
-        if: always()
+        if: ${{ always() && matrix.java == '17' }}
         uses: actions/upload-artifact@v2
         with:
           name: junit-results
           path: build/test-results
           retention-days: 1
       - name: Get cached gems
+        if: ${{ always() && matrix.java == '17' }}
         uses: actions/cache@v2.1.7
         with:
           path: docs/_gh-pages
@@ -92,6 +94,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
       - name: Copy docs
+        if: matrix.java == '17'
         run: |
           mkdir -p docs/_gh-pages
           sudo apt update
@@ -103,7 +106,7 @@ jobs:
           bundle exec github-pages build
           touch _site/.nojekyll
       - name: Deploy to gh-pages
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.java == '17'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -111,12 +114,7 @@ jobs:
           enable_jekyll: false
 
   publish-test-results:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-        java: [ '17.0.1' ]
-      fail-fast: false
+    runs-on: ubuntu-latest
     name: Publish Unit Tests Results
     needs: build
     if: always()
