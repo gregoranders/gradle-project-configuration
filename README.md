@@ -2,12 +2,12 @@
 
 ### Following the principle of *convention over configuration* this Gradle plugin provides default configurations for various plugins of a Gradle JVM project so that you do not need to copy boilerplate code throughout your projects.
 
-[//]: # ([![Release][release-image]][release-url])
+[![Release][release-image]][release-url]
 
 [![License][license-image]][license-url]
 [![Issues][issues-image]][issues-url]
 
-[//]: # ([![ReleaseMain Build][release-build-image]][release-url])
+[![ReleaseMain Build][release-build-image]][release-url]
 [![Main Build][main-build-image]][main-url]
 
 [//]: # ([![Development Build][development-build-image]][development-url])
@@ -27,7 +27,6 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=gregoranders_gradle-project-configuration&metric=security_rating)][sonarcloud-url]
 
 [![Main Language][language-image]][code-metric-url] [![Languages][languages-image]][code-metric-url] [![Code Size][code-size-image]][code-metric-url] [![Repo-Size][repo-size-image]][code-metric-url]
-
 
 ## Supported plugins:
 

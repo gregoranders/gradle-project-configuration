@@ -4,16 +4,17 @@ title: ${projectName}
 ---
 # Gradle Project Configuration Plugin
 
-### [Project Board][project-url]
+### Following the principle of *convention over configuration* this Gradle plugin provides default configurations for various plugins of a Gradle JVM project so that you do not need to copy boilerplate code throughout your projects.
 
-[//]: # ([![Release][release-image]][release-url])
+[![Release][release-image]][release-url]
 
 [![License][license-image]][license-url]
 [![Issues][issues-image]][issues-url]
 
-[//]: # ([![ReleaseMain Build][release-build-image]][release-url])
+[![ReleaseMain Build][release-build-image]][release-url]
 [![Main Build][main-build-image]][main-url]
-[![Development Build][development-build-image]][development-url]
+
+[//]: # ([![Development Build][development-build-image]][development-url])
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=gregoranders_gradle-project-configuration&metric=bugs)][sonarcloud-url]
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=gregoranders_gradle-project-configuration&metric=code_smells)][sonarcloud-url]

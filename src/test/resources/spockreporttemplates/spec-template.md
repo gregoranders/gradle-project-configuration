@@ -53,7 +53,7 @@ if (testSubject) {
             out << '\n#### ' << 'See:' << '\n\n'
             feature.attachments.each { value ->
                 if (value.name.contains('src/main')) {
-                  out << '* [' << value.name.replaceAll('.*main\\/java\\/', '').replaceAll('\\/', '.').replaceAll('\\.java$', '') << '](' << value.url << ')\n'
+                  out << '* [' << value.name.replaceAll('.*main\\/groovy\\/', '').replaceAll('\\/', '.').replaceAll('\\.groovy$', '') << '](' << value.url << ')\n'
                 } else {
                   out << '* [' << value.name << '](' << value.url << ')\n'
                 }

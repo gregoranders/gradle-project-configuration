@@ -45,10 +45,10 @@ import java.nio.file.Paths
 @See([
     'https://gradle.org',
     'https://docs.gradle.org/current/javadoc/org/gradle/api/Plugin.html',
-    'https://github.com/gregoranders/gradle-project-configuration/blob/main/src/main/groovy/io/github/gregoranders/gradle/project/configuration/ProjectConfigurationPlugin.groovy'
+    'https://github.com/gregoranders/gradle-project-configuration/blob/main/src/main/groovy/io/github/gregoranders/gradle/project/ProjectConfigurationPlugin.groovy'
 ])
 @Issue([
-    '2'
+    '2', '3'
 ])
 class ProjectConfigurationPluginSpec extends Specification {
 
