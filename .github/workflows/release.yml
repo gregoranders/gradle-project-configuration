@@ -64,7 +64,7 @@ jobs:
           GPG_KEY: ${{ secrets.GPG_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         with:
-          arguments: --info --stacktrace publish
+          arguments: --info --stacktrace publishAllPublicationsToMavenRepository
       - name: Publish Plugin
         uses: gradle/gradle-build-action@v2
         env:
