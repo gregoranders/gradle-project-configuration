@@ -27,7 +27,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
 class CPDTask extends DefaultTask {
-
     @TaskAction
     def cpd() {
         def cpdMinimumTokenCount = project.rootProject.hasProperty('cpdMinimumTokenCount') ? project.rootProject.property('cpdMinimumTokenCount') : 10

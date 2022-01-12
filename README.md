@@ -2,6 +2,8 @@
 
 ### Following the principle of *convention over configuration* this Gradle plugin provides default configurations for various plugins of a Gradle JVM project so that you do not need to copy boilerplate code throughout your projects.
 
+#### Compiled using JAVA 1.8 and Gradle 7.3.3
+
 [![Release][release-image]][release-url]
 
 [![License][license-image]][license-url]

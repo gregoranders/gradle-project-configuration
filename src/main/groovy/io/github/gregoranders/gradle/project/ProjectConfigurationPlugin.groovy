@@ -101,10 +101,10 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
     def applyPMD(Project internalProject) {
         if (internalProject.plugins.hasPlugin('pmd')) {
             internalProject.pmd {
-                consoleOutput = true
-                incrementalAnalysis = true
                 toolVersion = internalProject.rootProject.property('pmdVersion')
                 ignoreFailures = false
+                consoleOutput = true
+                incrementalAnalysis = true
                 ruleSets = []
                 ruleSetConfig = internalProject.rootProject.resources.text.fromFile('config/pmd/pmd-rules.xml')
             }
