@@ -19,8 +19,6 @@ plugins {
 
 def javaVersion = JavaVersion.VERSION_1_8
 
-group = project.property('group')
-
 repositories {
   mavenCentral()
   mavenLocal()
@@ -252,10 +250,10 @@ gradlePlugin {
 }
 
 pluginBundle {
-  website = property('url')
-  vcsUrl = property('url')
+  website = project.property('url')
+  vcsUrl = project.property('url')
 
-  description = project.description
+  description = project.property('pluginDescription')
 
   mavenCoordinates {
     groupId = project.group
@@ -266,7 +264,7 @@ pluginBundle {
   plugins {
     projectConfigurationPlugin {
       //noinspection GroovyAssignabilityCheck
-      displayName = 'JAVA Project Configuration'
+      displayName = project.property('pluginDisplayName')
       tags = ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
     }
   }
