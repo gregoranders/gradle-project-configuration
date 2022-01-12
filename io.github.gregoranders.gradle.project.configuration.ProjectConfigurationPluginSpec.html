@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/gradle-project-configuration/assets/css/style.css?v=5f437f55ca26d52a97367415a05c2435e58b8b77">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup theme-color -->
+<!-- start theme color meta headers -->
+<meta name="theme-color" content="#151515">
+<meta name="msapplication-navbutton-color" content="#151515">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- end theme color meta headers -->
+
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/gradle-project-configuration/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec | JetBrains IntelliJ Gradle Dependencies Plugin</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec" />
+<meta name="author" content="Gregor Anders" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Specification run results" />
+<meta property="og:description" content="Specification run results" />
+<link rel="canonical" href="https://gregoranders.github.io/gradle-project-configuration/io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec.html" />
+<meta property="og:url" content="https://gregoranders.github.io/gradle-project-configuration/io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec.html" />
+<meta property="og:site_name" content="JetBrains IntelliJ Gradle Dependencies Plugin" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec" />
+<script type="application/ld+json">
+{"@type":"WebPage","url":"https://gregoranders.github.io/gradle-project-configuration/io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec.html","author":{"@type":"Person","name":"Gregor Anders"},"headline":"io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPluginSpec","description":"Specification run results","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/gradle-project-configuration/">
+          <h1>JetBrains IntelliJ Gradle Dependencies Plugin</h1>
+        </a>
+        <h2>Specification run results</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/gregoranders/gradle-project-configuration" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="project-configuration-plugin">Project configuration plugin</h1>
+<blockquote>
+  <h1 id="as-a-user-i-would-like-to-be-able-to-use-a-gradle-plugin-to-configure-projects">As a user I would like to be able to use a <a href="https://gradle.org">Gradle</a> <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Plugin.html">plugin</a> to configure projects.</h1>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total Runs</th>
+      <th>Success Rate</th>
+      <th>Failures</th>
+      <th>Errors</th>
+      <th>Skipped</th>
+      <th>Total time (ms)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>100.0%</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.673 seconds</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="testsubject">TestSubject:</h4>
+<ul>
+  <li><strong>io.github.gregoranders.gradle.project.ProjectConfigurationPlugin</strong></li>
+</ul>
+
+<h4 id="issues">Issues:</h4>
+
+<ul>
+  <li><a href="https://github.com/gregoranders/gradle-project-configuration/issues/2">#2</a></li>
+</ul>
+
+<h4 id="see">See:</h4>
+
+<ul>
+  <li><a href="https://gradle.org">https://gradle.org</a></li>
+  <li><a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Plugin.html">https://docs.gradle.org/current/javadoc/org/gradle/api/Plugin.html</a></li>
+  <li><a href="https://github.com/gregoranders/gradle-project-configuration/blob/main/src/main/groovy/io/github/gregoranders/gradle/project/configuration/ProjectConfigurationPlugin.groovy">https:..github.com.gregoranders.gradle-project-configuration.blob.main.src.main.groovy.io.github.gregoranders.gradle.project.configuration.ProjectConfigurationPlugin.groovy</a></li>
+</ul>
+
+<h2 id="features">Features</h2>
+<ul>
+  <li><a href="#should-not-throw-an-exception">should not throw an exception</a></li>
+  <li><a href="#should-configure-idea-plugin">should configure IDEA plugin</a></li>
+  <li><a href="#should-configure-checkstyle-plugin">should configure Checkstyle plugin</a></li>
+  <li><a href="#should-configure-pmd-plugin">should configure PMD plugin</a></li>
+  <li><a href="#should-configure-jacoco-plugin">should configure JaCoCo plugin</a></li>
+  <li><a href="#should-build-project-with-plugin-enabled">should build project with plugin enabled</a></li>
+</ul>
+
+<hr />
+
+<h1 id="should-not-throw-an-exception">should not throw an exception</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 1.270 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a gradle project</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">project</span> <span class="o">=</span> <span class="n">ProjectBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">()).</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the unit under test is applied as a plugin</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'io.github.gregoranders.project-configuration'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> no exceptions should be thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h1 id="should-configure-idea-plugin">should configure IDEA plugin</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 1.303 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a gradle project</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">project</span> <span class="o">=</span> <span class="n">ProjectBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">()).</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a set of required plugins</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'java'</span><span class="o">)</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'idea'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the unit under test is applied as a plugin</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'description'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'description'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'author'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'author'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'email'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'email'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">version</span> <span class="o">=</span> <span class="s1">'version'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">sourceCompatibility</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+<span class="n">project</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">targetCompatibility</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'io.github.gregoranders.project-configuration'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> the IDEA plugin configuration was applied</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">idea</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">downloadJavadoc</span>
+<span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">idea</span><span class="o">.</span><span class="na">module</span><span class="o">.</span><span class="na">downloadSources</span>
+<span class="n">project</span><span class="o">.</span><span class="na">rootProject</span><span class="o">.</span><span class="na">idea</span><span class="o">.</span><span class="na">project</span><span class="o">.</span><span class="na">vcs</span> <span class="o">==</span> <span class="s1">'Git'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">rootProject</span><span class="o">.</span><span class="na">idea</span><span class="o">.</span><span class="na">project</span><span class="o">.</span><span class="na">jdkName</span> <span class="o">==</span> <span class="s1">'jdk-1.8'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">rootProject</span><span class="o">.</span><span class="na">idea</span><span class="o">.</span><span class="na">project</span><span class="o">.</span><span class="na">languageLevel</span> <span class="o">==</span> <span class="k">new</span> <span class="n">IdeaLanguageLevel</span><span class="o">(</span><span class="s1">'1.8'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> no exceptions are thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h1 id="should-configure-checkstyle-plugin">should configure Checkstyle plugin</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 0.088 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a gradle project</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">project</span> <span class="o">=</span> <span class="n">ProjectBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">()).</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a set of required plugins</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'java'</span><span class="o">)</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'checkstyle'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the unit under test is applied as a plugin</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'description'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'description'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'author'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'author'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'email'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'email'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'checkstyleVersion'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'1.0.0'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'io.github.gregoranders.project-configuration'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> the Checkstyle plugin configuration was applied</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">checkstyle</span><span class="o">.</span><span class="na">toolVersion</span> <span class="o">==</span> <span class="s1">'1.0.0'</span>
+<span class="o">!</span><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">checkstyle</span><span class="o">.</span><span class="na">ignoreFailures</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> no exceptions are thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h1 id="should-configure-pmd-plugin">should configure PMD plugin</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 0.152 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a gradle project</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">project</span> <span class="o">=</span> <span class="n">ProjectBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">()).</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a set of required plugins</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'java'</span><span class="o">)</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'pmd'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the unit under test is applied as a plugin</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'description'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'description'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'author'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'author'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'email'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'email'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'pmdVersion'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'1.0.0'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'io.github.gregoranders.project-configuration'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> the PMD plugin configuration was applied</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">pmd</span><span class="o">.</span><span class="na">toolVersion</span> <span class="o">==</span> <span class="s1">'1.0.0'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">pmd</span><span class="o">.</span><span class="na">consoleOutput</span>
+<span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">pmd</span><span class="o">.</span><span class="na">incrementalAnalysis</span>
+<span class="o">!</span><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">pmd</span><span class="o">.</span><span class="na">ignoreFailures</span>
+<span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">pmd</span><span class="o">.</span><span class="na">ruleSetConfig</span> <span class="o">!=</span> <span class="s1">''</span>
+<span class="n">project</span><span class="o">.</span><span class="na">tasks</span><span class="o">.</span><span class="na">cpd</span> <span class="o">!=</span> <span class="kc">null</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> no exceptions are thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h1 id="should-configure-jacoco-plugin">should configure JaCoCo plugin</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 0.181 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a gradle project</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">project</span> <span class="o">=</span> <span class="n">ProjectBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">()).</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> a set of required plugins</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'java'</span><span class="o">)</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'jacoco'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the unit under test is applied as a plugin</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'description'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'description'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'author'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'author'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'email'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'email'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">ext</span><span class="o">[</span><span class="s1">'jacocoVersion'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'1.0.0'</span>
+<span class="n">project</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s1">'io.github.gregoranders.project-configuration'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> the JaCoCo plugin configuration was applied</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">project</span><span class="o">.</span><span class="na">extensions</span><span class="o">.</span><span class="na">jacoco</span><span class="o">.</span><span class="na">toolVersion</span> <span class="o">==</span> <span class="s1">'1.0.0'</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>And</strong> no exceptions are thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h1 id="should-build-project-with-plugin-enabled">should build project with plugin enabled</h1>
+
+<p>Result: <strong>PASS</strong>
+Time: 23.621 seconds</p>
+
+<ul>
+  <li><strong>Given</strong> a simple project path</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">def</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s1">'/simple-project'</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>When</strong> the project is build</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GradleRunner</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
+<span class="o">.</span><span class="na">withProjectDir</span><span class="o">(</span><span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">path</span><span class="o">.</span><span class="na">toURI</span><span class="o">()).</span><span class="na">toFile</span><span class="o">())</span>
+<span class="o">.</span><span class="na">withPluginClasspath</span><span class="o">()</span>
+<span class="o">.</span><span class="na">withEnvironment</span><span class="o">([</span>
+    <span class="s1">'GPG_KEY'</span>       <span class="o">:</span> <span class="s1">'test'</span><span class="o">,</span>
+    <span class="s1">'GPG_PASSPHRASE'</span><span class="o">:</span> <span class="s1">'test'</span><span class="o">,</span>
+<span class="o">])</span>
+<span class="o">.</span><span class="na">withArguments</span><span class="o">(</span><span class="n">getGradleJVMArgs</span><span class="o">(),</span> <span class="s1">'clean'</span><span class="o">,</span> <span class="s1">'check'</span><span class="o">,</span> <span class="s1">'build'</span><span class="o">)</span>
+<span class="o">.</span><span class="na">build</span><span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Then</strong> no exceptions are thrown</li>
+</ul>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">noExceptionThrown</span><span class="o">()</span>
+</code></pre></div></div>
+
+
+      </section>
+    </div>
+  </body>
+</html>
