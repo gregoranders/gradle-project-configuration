@@ -32,7 +32,7 @@ jobs:
       - name: Echo JAVA_HOME
         run: echo $JAVA_HOME
       - name: Echo JAVA version
-        run: java --version
+        run: java -version
       - name: Cache SonarCloud packages
         uses: actions/cache@v2.1.7
         with:
