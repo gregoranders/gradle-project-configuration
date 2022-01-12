@@ -297,6 +297,10 @@ check {
   dependsOn project.tasks.dependencyCheckAnalyze
 }
 
+configurations.all {
+  exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+}
+
 dependencies {
 
   implementation(
