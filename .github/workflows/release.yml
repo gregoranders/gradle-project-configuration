@@ -72,4 +72,4 @@ jobs:
           PLUGIN_KEY: ${{ secrets.PLUGIN_KEY }}
           PLUGIN_TOKEN: ${{ secrets.PLUGIN_TOKEN }}
         with:
-          arguments: --info --stacktrace -Pgradle.publish.key=${{ secrets.PLUGIN_KEY }} -Pgradle.publish.secret=${{ secrets.PLUGIN_TOKEN }}
+          arguments: --info --stacktrace publishPlugins -Pgradle.publish.key=${{ secrets.PLUGIN_KEY }} -Pgradle.publish.secret=${{ secrets.PLUGIN_TOKEN }}
