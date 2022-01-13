@@ -217,9 +217,6 @@ publishing {
   }
 
   repositories {
-    maven {
-      url = project.layout.buildDirectory.dir('repos')
-    }
     if (System.getenv('CI') == 'true') {
       maven {
         name = 'GitHubPackages'
@@ -228,6 +225,10 @@ publishing {
           username = System.getenv('GITHUB_ACTOR')
           password = System.getenv('GITHUB_TOKEN')
         }
+      }
+    } else {
+      maven {
+        url = project.layout.buildDirectory.dir('repos')
       }
     }
   }
@@ -254,12 +255,6 @@ pluginBundle {
   vcsUrl = project.property('url')
 
   description = project.property('pluginDescription')
-
-  mavenCoordinates {
-    groupId = project.group
-    artifactId = project.name
-    version = project.version
-  }
 
   plugins {
     projectConfigurationPlugin {

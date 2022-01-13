@@ -30,7 +30,32 @@
 
 [![Main Language][language-image]][code-metric-url] [![Languages][languages-image]][code-metric-url] [![Code Size][code-size-image]][code-metric-url] [![Repo-Size][repo-size-image]][code-metric-url]
 
-## Supported plugins:
+## How to use
+
+### Using the plugins DSL
+```groovy
+plugins {
+  id "io.github.gregoranders.project-configuration" version "0.0.3"
+}
+```
+
+### Using legacy plugin application
+```groovy
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "io.github.gregoranders:project-configuration:0.0.3"
+  }
+}
+
+apply plugin: "io.github.gregoranders.project-configuration"
+```
+
+## Supported plugins
 
 * [IDEA][idea-plugin-url]
 * [Checkstyle][checkstyle-plugin-url]
