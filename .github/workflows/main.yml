@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ '8', '17' ]
+        java: [ '17' ]
       fail-fast: false
     name: ${{ matrix.os }} JDK ${{ matrix.java }}
     steps:
@@ -32,7 +32,7 @@ jobs:
       - name: Echo JAVA_HOME
         run: echo $JAVA_HOME
       - name: Echo JAVA version
-        run: java -version
+        run: java --version
       - name: Cache SonarCloud packages
         uses: actions/cache@v2.1.7
         with:
@@ -64,7 +64,6 @@ jobs:
         with:
           arguments: --info --stacktrace build
       - name: Sonarcube analyze
-        if: matrix.java == '17'
         uses: gradle/gradle-build-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,38 +78,55 @@ jobs:
           path: build/reports
           retention-days: 2
       - name: Upload test results as an artifact
-        if: ${{ always() && matrix.java == '17' }}
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: junit-results
           path: build/test-results
           retention-days: 1
+      - name: Prepare spock reports artifact
+        run: |
+          mkdir -p build/gh-pages
+          cp build/reports/spock/* build/gh-pages
+          cp docs/gh-pages/* build/gh-pages
+      - name: Upload spock reports as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: gh-pages
+          path: build/gh-pages
+          retention-days: 1
+
+  publish-spock-reports:
+    runs-on: ubuntu-latest
+    name: Publish Spock Reports
+    needs: build
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: gh-pages
+          path: gh-pages-artifact
       - name: Get cached gems
-        if: ${{ always() && matrix.java == '17' }}
         uses: actions/cache@v2.1.7
         with:
-          path: docs/_gh-pages
+          path: gh-pages-artifact
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          restore-keys: ${{ runner.os }}-gems-
       - name: Copy docs
-        if: matrix.java == '17'
         run: |
-          mkdir -p docs/_gh-pages
+          ls -lha .
+          ls -lha gh-pages-artifact
           sudo apt update
           sudo apt install bundler
-          cp build/reports/spock/* docs/_gh-pages
-          cp docs/gh-pages/* docs/_gh-pages
-          cd docs/_gh-pages
+          cd gh-pages-artifact
           bundle update
           bundle exec github-pages build
           touch _site/.nojekyll
       - name: Deploy to gh-pages
-        if: matrix.java == '17'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_gh-pages/_site
+          publish_dir: gh-pages-artifact/_site
           enable_jekyll: false
 
   publish-test-results:
@@ -123,9 +139,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: junit-results
-          path: artifact
+          path: junit-artifact
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
-        if: always()
         with:
-          files: artifact/**/*.xml
+          files: junit-artifact/**/*.xml
