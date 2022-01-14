@@ -101,6 +101,10 @@ jobs:
     name: Publish Spock Reports
     needs: build
     steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
@@ -135,6 +139,10 @@ jobs:
     needs: build
     if: always()
     steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
