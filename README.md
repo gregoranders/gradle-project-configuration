@@ -2,7 +2,7 @@
 
 ### Following the principle of *convention over configuration* this Gradle plugin provides default configurations for various plugins of a Gradle JVM project so that you do not need to copy boilerplate code throughout your projects.
 
-#### Compiled using JAVA 1.8 and Gradle 7.3.3
+#### Compiled using JAVA 17 with 1.8 as target and Gradle 7.3.3
 
 [![Release][release-image]][release-url]
 
@@ -35,7 +35,7 @@
 ### Using the plugins DSL
 ```groovy
 plugins {
-  id "io.github.gregoranders.project-configuration" version "0.0.3"
+  id "io.github.gregoranders.project-configuration" version "0.0.4"
 }
 ```
 
@@ -48,7 +48,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "io.github.gregoranders:project-configuration:0.0.3"
+    classpath "io.github.gregoranders:project-configuration:0.0.4"
   }
 }
 
@@ -77,7 +77,7 @@ idea {
   project {
     vcs = 'Git'
     jdkName = "jdk-${project.sourceCompatibility}"
-    languageLevel = project.sourceCompatibility
+    languageLevel = project.targetCompatibility
   }
   module {
     downloadJavadoc = true
@@ -97,6 +97,7 @@ checkstyle {
   toolVersion = project.rootProject.property('checkstyleVersion')
   ignoreFailures = false
 }
+project.tasks.checkstyleTest.enabled = false
 ```
 
 ### PMD
@@ -118,9 +119,10 @@ pmd {
   ruleSets = []
   ruleSetConfig = project.rootProject.resources.text.fromFile('config/pmd/pmd-rules.xml')
 }
-project.tasks.register('cpd', CPDTask)
-check.configure {
-  dependsOn project.tasks.cpd
+project.tasks.register('cpdMain', CPDTask)
+project.tasks.pmdTest.enabled = false
+project.check {
+  dependsOn project.tasks.cpdMain
 }
 ```
 
@@ -168,10 +170,10 @@ jacocoTestCoverageVerification {
     }
   }
 }
-test {
+project.tasks.test {
   finalizedBy project.tasks.jacocoTestReport
 }
-check {
+project.tasks.check {
   dependsOn project.tasks.jacocoTestCoverageVerification
 }
 ```
@@ -201,7 +203,7 @@ spotbugsMain {
     }
   }
 }
-spotbugsTest.enabled = false
+project.tasks.spotbugsTest.enabled = false
 ```
 
 ### OWASP Dependency Check
@@ -292,6 +294,7 @@ publishing {
   }
   repositories {
     maven {
+      name = 'Build'
       url = project.layout.buildDirectory.dir('repos')
     }
   }
@@ -306,10 +309,12 @@ required environment variables
 * GPG_PASSPHRASE
 
 ```groovy
-signing {
-  useInMemoryPgpKeys(System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
-  if (project.plugins.hasPlugin('maven-publish')) {
-    sign project.publishing.publications
+if (System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
+  project.signing {
+    useInMemoryPgpKeys(System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
+    if (project.plugins.hasPlugin('maven-publish')) {
+      sign project.publishing.publications
+    }
   }
 }
 ```

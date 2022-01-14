@@ -48,7 +48,7 @@ import java.nio.file.Paths
     'https://github.com/gregoranders/gradle-project-configuration/blob/main/src/main/groovy/io/github/gregoranders/gradle/project/ProjectConfigurationPlugin.groovy'
 ])
 @Issue([
-    '2', '3'
+    '2', '3', '5'
 ])
 class ProjectConfigurationPluginSpec extends Specification {
 
@@ -130,7 +130,7 @@ class ProjectConfigurationPluginSpec extends Specification {
             project.extensions.pmd.incrementalAnalysis
             !project.extensions.pmd.ignoreFailures
             project.extensions.pmd.ruleSetConfig != ''
-            project.tasks.cpd != null
+            project.tasks.cpdMain != null
         and: 'no exceptions are thrown'
             noExceptionThrown()
     }
@@ -159,16 +159,39 @@ class ProjectConfigurationPluginSpec extends Specification {
         given: 'a simple project path'
             def path = getClass().getResource('/simple-project')
         when: 'the project is build'
-            GradleRunner.create()
+            def result = GradleRunner.create()
                 .withProjectDir(Paths.get(path.toURI()).toFile())
                 .withPluginClasspath()
                 .withEnvironment([
+                    'CI'            : 'true',
                     'GPG_KEY'       : 'test',
                     'GPG_PASSPHRASE': 'test',
                 ])
                 .withArguments(getGradleJVMArgs(), 'clean', 'check', 'build')
                 .build()
-        then: 'no exceptions are thrown'
+        then: 'the build result contains :checkstyleMain'
+            result.output.contains(':checkstyleMain')
+        and: 'the build result contains :checkstyleTest SKIPPED'
+            result.output.contains(':checkstyleTest SKIPPED')
+        and: 'it contains :pmdMain'
+            result.output.contains(':pmdMain')
+        and: 'it contains :pmdTest SKIPPED'
+            result.output.contains(':pmdTest SKIPPED')
+        and: 'it contains :cpd'
+            result.output.contains(':cpdMain')
+        and: 'it contains :spotbugsMain'
+            result.output.contains('spotbugsMain')
+        and: 'it contains :spotbugsTest SKIPPED'
+            result.output.contains('spotbugsTest SKIPPED')
+        and: 'it contains :jacocoTestReport'
+            result.output.contains(':jacocoTestReport')
+        and: 'it contains :jacocoTestCoverageVerification'
+            result.output.contains(':jacocoTestCoverageVerification')
+        and: 'it contains :dependencyCheckAnalyze'
+            result.output.contains(':dependencyCheckAnalyze')
+        and: 'it contains :sourcesJar'
+            result.output.contains(':sourcesJar')
+        and: 'no exceptions are thrown'
             noExceptionThrown()
     }
 

@@ -77,7 +77,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 project {
                     vcs = 'Git'
                     jdkName = "jdk-${internalProject.java.sourceCompatibility}"
-                    languageLevel = internalProject.java.sourceCompatibility
+                    languageLevel = internalProject.java.targetCompatibility
                 }
             }
             internalProject.idea {
@@ -95,6 +95,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 toolVersion = internalProject.rootProject.property('checkstyleVersion')
                 ignoreFailures = false
             }
+            internalProject.tasks.checkstyleTest.enabled = false
         }
     }
 
@@ -108,9 +109,10 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 ruleSets = []
                 ruleSetConfig = internalProject.rootProject.resources.text.fromFile('config/pmd/pmd-rules.xml')
             }
-            internalProject.tasks.register('cpd', CPDTask)
-            internalProject.check.configure {
-                dependsOn internalProject.tasks.cpd
+            internalProject.tasks.register('cpdMain', CPDTask)
+            internalProject.tasks.pmdTest.enabled = false
+            internalProject.check {
+                dependsOn internalProject.tasks.cpdMain
             }
         }
     }
@@ -135,7 +137,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                     }
                 }
             }
-            internalProject.spotbugsTest.enabled = false
+            internalProject.tasks.spotbugsTest.enabled = false
         }
     }
 
@@ -264,6 +266,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 }
                 repositories {
                     maven {
+                        name = 'Build'
                         url = internalProject.layout.buildDirectory.dir('repos')
                     }
                 }

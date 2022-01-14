@@ -23,22 +23,38 @@
  */
 package io.github.gregoranders.gradle.project
 
+import groovy.xml.XmlSlurper
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
 
 class CPDTask extends DefaultTask {
+
+    CPDTask() {
+        super()
+        setDescription("Run copy/paste analysis for main classes")
+        setGroup("verification")
+    }
+
     @TaskAction
     def cpd() {
         def cpdMinimumTokenCount = project.rootProject.hasProperty('cpdMinimumTokenCount') ? project.rootProject.property('cpdMinimumTokenCount') : 10
-        File reportPath = project.file("${project.buildDir}/reports/cpd")
+        def reportPath = project.file("${project.buildDir}/reports/cpd")
         reportPath.mkdirs()
+        def outputFile = project.file( "${reportPath}/main.xml")
         ant.taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
             classpath: project.configurations.pmd.asPath)
         ant.cpd(minimumTokenCount: cpdMinimumTokenCount, format: 'xml',
-            outputFile: new File(reportPath, 'main.xml')) {
+            outputFile: outputFile) {
             ant.fileset(dir: 'src/main/java') {
                 include(name: '**/*.java')
             }
+        }
+        def rootNode = new XmlSlurper().parse(outputFile)
+        def duplications = rootNode.children().size()
+        if (duplications > 0) {
+            def duplicationsAsString = duplications == 1 ? 'duplication' : 'duplications'
+            throw new GradleException("Copy/Paste analysis found ${duplications} ${duplicationsAsString}. See the report at: file:///${outputFile.toString()}")
         }
     }
 }
