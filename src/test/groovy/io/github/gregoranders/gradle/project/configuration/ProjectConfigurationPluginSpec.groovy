@@ -28,6 +28,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.UnexpectedBuildFailure
 import spock.lang.*
 
 import java.nio.charset.StandardCharsets
@@ -177,7 +178,7 @@ class ProjectConfigurationPluginSpec extends Specification {
             result.output.contains(':pmdMain')
         and: 'it contains :pmdTest SKIPPED'
             result.output.contains(':pmdTest SKIPPED')
-        and: 'it contains :cpd'
+        and: 'it contains :cpdMain'
             result.output.contains(':cpdMain')
         and: 'it contains :spotbugsMain'
             result.output.contains('spotbugsMain')
@@ -193,6 +194,21 @@ class ProjectConfigurationPluginSpec extends Specification {
             result.output.contains(':sourcesJar')
         and: 'no exceptions are thrown'
             noExceptionThrown()
+    }
+
+    def 'should fail build project with plugin enabled and code containing duplications'() {
+        given: 'a simple project path'
+            def path = getClass().getResource('/simple-project-with-duplications')
+        when: 'the project is build'
+            GradleRunner.create()
+                .withProjectDir(Paths.get(path.toURI()).toFile())
+                .withPluginClasspath()
+                .withArguments(getGradleJVMArgs(), 'clean', 'check')
+                .build()
+        then: 'a exception is thrown'
+            UnexpectedBuildFailure exception = thrown()
+        and: ''
+            exception.getMessage().contains('Copy/Paste analysis')
     }
 
     def getGradleJVMArgs() {
