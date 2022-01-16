@@ -143,7 +143,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
 
     def applyJaCoCo(Project internalProject) {
         if (internalProject.plugins.hasPlugin('jacoco')) {
-            internalProject.rootProject.jacoco {
+            internalProject.jacoco {
                 toolVersion = internalProject.rootProject.property('jacocoVersion')
             }
             internalProject.jacocoTestReport {

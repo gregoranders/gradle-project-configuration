@@ -35,7 +35,7 @@
 ### Using the plugins DSL
 ```groovy
 plugins {
-  id "io.github.gregoranders.project-configuration" version "0.0.4"
+  id "io.github.gregoranders.project-configuration" version "0.0.5"
 }
 ```
 
@@ -48,7 +48,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "io.github.gregoranders:project-configuration:0.0.4"
+    classpath "io.github.gregoranders:project-configuration:0.0.5"
   }
 }
 
