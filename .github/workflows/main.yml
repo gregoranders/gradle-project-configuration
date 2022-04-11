@@ -106,7 +106,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: gh-pages
           path: gh-pages-artifact
@@ -144,7 +144,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: junit-results
           path: junit-artifact
