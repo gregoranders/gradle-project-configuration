@@ -72,14 +72,14 @@ jobs:
           arguments: --info --stacktrace sonarqube
       - name: Upload reports as an artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: reports-jdk${{ matrix.java }}-${{ matrix.os }}
           path: build/reports
           retention-days: 2
       - name: Upload test results as an artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: junit-results
           path: build/test-results
