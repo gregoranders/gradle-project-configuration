@@ -66,6 +66,9 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 useJUnitPlatform()
                 testLogging {
                     events 'passed', 'skipped', 'failed'
+                    showExceptions true
+                    showCauses true
+                    showStackTraces true
                 }
             }
         }
