@@ -153,7 +153,7 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
                 dependsOn internalProject.project.tasks.test
                 reports {
                     xml.required = true
-                    csv.required = false
+                    csv.required = true
                     html.required = true
                 }
             }
