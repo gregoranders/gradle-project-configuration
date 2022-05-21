@@ -30,4 +30,13 @@
     <packageUrl regex="true">^pkg:maven/commons\-io/commons\-io@.*$</packageUrl>
     <cve>CVE-2021-29425</cve>
   </suppress>
+  <suppress>
+    <notes><![CDATA[
+   file name: gson-2.8.5.jar
+
+   Used in PMD and SpotBugs
+   ]]></notes>
+    <packageUrl regex="true">^pkg:maven/com\.google\.code\.gson/gson@.*$</packageUrl>
+    <cpe>cpe:/a:google:gson</cpe>
+  </suppress>
 </suppressions>
