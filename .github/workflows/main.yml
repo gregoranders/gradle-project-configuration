@@ -20,11 +20,11 @@ jobs:
     name: ${{ matrix.os }} JDK ${{ matrix.java }}
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v2.5.0
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'temurin'
           cache: 'gradle'
@@ -72,14 +72,14 @@ jobs:
           arguments: --info --stacktrace sonarqube
       - name: Upload reports as an artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: reports-jdk${{ matrix.java }}-${{ matrix.os }}
           path: build/reports
           retention-days: 2
       - name: Upload test results as an artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: junit-results
           path: build/test-results
@@ -90,7 +90,7 @@ jobs:
           cp build/reports/spock/* build/gh-pages
           cp docs/gh-pages/* build/gh-pages
       - name: Upload spock reports as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gh-pages
           path: build/gh-pages
@@ -102,7 +102,7 @@ jobs:
     needs: build
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Download Artifacts
@@ -140,11 +140,11 @@ jobs:
     if: always()
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: junit-results
           path: junit-artifact
