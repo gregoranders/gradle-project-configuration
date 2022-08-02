@@ -97,6 +97,6 @@ jobs:
           name: junit-results
           path: junit-artifact
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
         with:
           files: junit-artifact/**/*.xml
