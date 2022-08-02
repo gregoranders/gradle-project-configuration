@@ -246,6 +246,7 @@ gradlePlugin {
     projectConfigurationPlugin {
       id = 'io.github.gregoranders.project-configuration'
       implementationClass = 'io.github.gregoranders.gradle.project.ProjectConfigurationPlugin'
+      displayName = project.property('pluginDisplayName')
     }
   }
 }
@@ -256,13 +257,9 @@ pluginBundle {
 
   description = project.property('pluginDescription')
 
-  plugins {
-    projectConfigurationPlugin {
-      //noinspection GroovyAssignabilityCheck
-      displayName = project.property('pluginDisplayName')
-      tags = ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
-    }
-  }
+  pluginTags = [
+    projectConfigurationPlugin: ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
+  ]
 }
 
 test {
