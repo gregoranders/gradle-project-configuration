@@ -44,15 +44,20 @@ class CPDTask extends DefaultTask {
         def outputFile = project.file( "${reportPath}/main.xml")
         ant.taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
             classpath: project.configurations.pmd.asPath)
-        ant.cpd(minimumTokenCount: cpdMinimumTokenCount, format: 'xml',
+        ant.cpd(minimumTokenCount: cpdMinimumTokenCount,
+            ignoreIdentifiers: 'true',
+            ignoreLiterals: 'true',
+            ignoreAnnotations: 'true',
+            language: 'java',
+            format: 'xml',
             outputFile: outputFile) {
             ant.fileset(dir: 'src/main/java') {
                 include(name: '**/*.java')
             }
         }
         def rootNode = new XmlSlurper().parse(outputFile)
-        def duplications = rootNode.children().size()
-        if (duplications > 0) {
+        if (rootNode.duplication && rootNode.duplication.size() > 0) {
+            def duplications = rootNode.duplication.size()
             def duplicationsAsString = duplications == 1 ? 'duplication' : 'duplications'
             throw new GradleException("Copy/Paste analysis found ${duplications} ${duplicationsAsString}. See the report at: file:///${outputFile.toString()}")
         }

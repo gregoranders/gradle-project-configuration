@@ -165,6 +165,7 @@ class ProjectConfigurationPluginSpec extends Specification {
                 .withPluginClasspath()
                 .withEnvironment([
                     'CI'            : 'true',
+                    'GPG_KEY_ID'    : '0xfsahgdf237643257',
                     'GPG_KEY'       : 'test',
                     'GPG_PASSPHRASE': 'test',
                 ])

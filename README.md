@@ -35,7 +35,7 @@
 ### Using the plugins DSL
 ```groovy
 plugins {
-  id "io.github.gregoranders.project-configuration" version "0.0.7"
+  id "io.github.gregoranders.project-configuration" version "0.0.8"
 }
 ```
 
@@ -48,7 +48,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "io.github.gregoranders:project-configuration:0.0.7"
+    classpath "io.github.gregoranders:project-configuration:0.0.8"
   }
 }
 
@@ -305,13 +305,14 @@ publishing {
 
 required environment variables
 
+* GPG_KEY_ID
 * GPG_KEY
 * GPG_PASSPHRASE
 
 ```groovy
-if (System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
+if (System.getenv('GPG_KEY_ID') && System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
   project.signing {
-    useInMemoryPgpKeys(System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
+    useInMemoryPgpKeys(System.getenv('GPG_KEY_ID'), System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
     if (project.plugins.hasPlugin('maven-publish')) {
       sign project.publishing.publications
     }

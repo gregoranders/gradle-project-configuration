@@ -279,9 +279,9 @@ class ProjectConfigurationPlugin implements Plugin<Project> {
 
     def applySigning(Project internalProject) {
         if (internalProject.plugins.hasPlugin('signing')) {
-            if (System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
+            if (System.getenv('GPG_KEY_ID') && System.getenv('GPG_KEY') && System.getenv('GPG_PASSPHRASE')) {
                 internalProject.signing {
-                    useInMemoryPgpKeys(System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
+                    useInMemoryPgpKeys(System.getenv('GPG_KEY_ID'), System.getenv('GPG_KEY'), System.getenv('GPG_PASSPHRASE'))
                     if (internalProject.plugins.hasPlugin('maven-publish')) {
                         sign internalProject.publishing.publications
                     }
