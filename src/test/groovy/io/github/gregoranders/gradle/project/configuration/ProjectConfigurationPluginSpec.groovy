@@ -209,7 +209,7 @@ class ProjectConfigurationPluginSpec extends Specification {
         then: 'a exception is thrown'
             UnexpectedBuildFailure exception = thrown()
         and: ''
-            exception.getMessage().contains('Copy/Paste analysis')
+            exception.getMessage().contains('Copy/Paste analysis found 6')
     }
 
     def getGradleJVMArgs() {

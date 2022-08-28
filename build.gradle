@@ -11,9 +11,9 @@ plugins {
   id 'signing'
   id 'project-report'
   id 'build-dashboard'
-  id 'com.gradle.plugin-publish' version '1.0.0'
-  id 'com.github.spotbugs' version '5.0.9'
-  id 'org.owasp.dependencycheck' version '7.1.1'
+  id 'com.gradle.plugin-publish' version '0.21.0'
+  id 'com.github.spotbugs' version '5.0.10'
+  id 'org.owasp.dependencycheck' version '7.1.2'
   id 'org.sonarqube' version '3.4.0.2513'
 }
 
@@ -246,7 +246,7 @@ gradlePlugin {
     projectConfigurationPlugin {
       id = 'io.github.gregoranders.project-configuration'
       implementationClass = 'io.github.gregoranders.gradle.project.ProjectConfigurationPlugin'
-      displayName = project.property('pluginDisplayName')
+//      displayName = project.property('pluginDisplayName')
     }
   }
 }
@@ -257,9 +257,16 @@ pluginBundle {
 
   description = project.property('pluginDescription')
 
-  pluginTags = [
-    projectConfigurationPlugin: ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
-  ]
+  plugins {
+    projectConfigurationPlugin {
+      //noinspection GroovyAssignabilityCheck
+      displayName = project.property('pluginDisplayName')
+      tags = ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
+    }
+  }
+//  pluginTags = [
+//    projectConfigurationPlugin: ['project', 'configuration', 'java', 'checkstyle', 'pmd', 'spotbugs', 'jacoco', 'dependencycheck']
+//  ]
 }
 
 test {
