@@ -13,7 +13,7 @@ plugins {
   id 'build-dashboard'
   id 'com.gradle.plugin-publish' version '0.21.0'
   id 'com.github.spotbugs' version '5.0.10'
-  id 'org.owasp.dependencycheck' version '7.1.2'
+  id 'org.owasp.dependencycheck' version '7.3.2'
   id 'org.sonarqube' version '3.4.0.2513'
 }
 
