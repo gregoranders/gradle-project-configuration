@@ -34,13 +34,13 @@ jobs:
       - name: Echo JAVA version
         run: java --version
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.1
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -111,7 +111,7 @@ jobs:
           name: gh-pages
           path: gh-pages-artifact
       - name: Get cached gems
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.1
         with:
           path: gh-pages-artifact
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
