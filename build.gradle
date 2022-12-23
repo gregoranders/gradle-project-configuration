@@ -12,12 +12,18 @@ plugins {
   id 'project-report'
   id 'build-dashboard'
   id 'com.gradle.plugin-publish' version '0.21.0'
-  id 'com.github.spotbugs' version '5.0.10'
-  id 'org.owasp.dependencycheck' version '7.1.2'
-  id 'org.sonarqube' version '3.4.0.2513'
+  id 'com.github.spotbugs' version '5.0.13'
+  id 'org.owasp.dependencycheck' version '7.4.1'
+  id 'org.sonarqube' version '3.5.0.2730'
 }
 
 def javaVersion = JavaVersion.VERSION_17
+
+wrapper {
+  gradleVersion = '7.6'
+  distributionType = Wrapper.DistributionType.BIN
+  distributionSha256Sum = '7ba68c54029790ab444b39d7e293d3236b2632631fb5f2e012bb28b4ff669e4b'
+}
 
 repositories {
   mavenCentral()

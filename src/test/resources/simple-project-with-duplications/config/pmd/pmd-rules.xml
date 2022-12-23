@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2022 Gregor Anders
+  ~ Copyright (c) 2022 - present Gregor Anders
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -44,9 +44,7 @@
     <exclude name="UncommentedEmptyConstructor"/>
     <exclude name="UncommentedEmptyMethodBody"/>
   </rule>
-  <rule ref="category/java/errorprone.xml">
-    <exclude name="BeanMembersShouldSerialize"/>
-  </rule>
+  <rule ref="category/java/errorprone.xml"/>
   <rule ref="category/java/multithreading.xml"/>
   <rule ref="category/java/performance.xml"/>
   <rule ref="category/java/security.xml"/>

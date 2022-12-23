@@ -2,7 +2,7 @@
 
 ### Following the principle of *convention over configuration* this Gradle plugin provides default configurations for various plugins of a Gradle JVM project so that you do not need to copy boilerplate code throughout your projects.
 
-#### Compiled using JAVA 17 with 1.8 as target and Gradle 7.5.1
+#### Compiled using JAVA 17 with 1.8 as target and Gradle 7.6
 
 [![Release][release-image]][release-url]
 
@@ -35,7 +35,7 @@
 ### Using the plugins DSL
 ```groovy
 plugins {
-  id "io.github.gregoranders.project-configuration" version "0.0.7"
+  id "io.github.gregoranders.project-configuration" version "0.0.8"
 }
 ```
 
@@ -48,7 +48,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "io.github.gregoranders:project-configuration:0.0.7"
+    classpath "io.github.gregoranders:project-configuration:0.0.8"
   }
 }
 
