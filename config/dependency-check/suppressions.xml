@@ -41,4 +41,20 @@
     <cve>CVE-2022-42920</cve>
   </suppress>
 
+  <suppress>
+    <notes><![CDATA[
+   file name: guava-31.1-jre.jar
+
+   guava - Creation of Temporary File in Directory with Insecure Permissions [CVE-2020-8908]
+
+   The software creates a temporary file in a directory whose permissions allow unintended actors to determine the file's existence or otherwise access that file.
+
+   CWE-379 Creation of Temporary File in Directory with Insecure Permissions
+
+   Used by CheckStyle.
+   ]]></notes>
+    <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
+    <vulnerabilityName>CVE-2020-8908</vulnerabilityName>
+  </suppress>
+
 </suppressions>

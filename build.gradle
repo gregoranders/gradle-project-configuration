@@ -12,17 +12,17 @@ plugins {
   id 'project-report'
   id 'build-dashboard'
   id 'com.gradle.plugin-publish' version '0.21.0'
-  id 'com.github.spotbugs' version '5.0.13'
-  id 'org.owasp.dependencycheck' version '7.4.3'
-  id 'org.sonarqube' version '3.5.0.2730'
+  id 'com.github.spotbugs' version '5.0.14'
+  id 'org.owasp.dependencycheck' version '8.2.1'
+  id 'org.sonarqube' version '4.0.0.2929'
 }
 
 def javaVersion = JavaVersion.VERSION_17
 
 wrapper {
-  gradleVersion = '7.6'
+  gradleVersion = '8.1.1'
   distributionType = Wrapper.DistributionType.BIN
-  distributionSha256Sum = '7ba68c54029790ab444b39d7e293d3236b2632631fb5f2e012bb28b4ff669e4b'
+  distributionSha256Sum = 'e111cb9948407e26351227dabce49822fb88c37ee72f1d1582a69c68af2e702f'
 }
 
 repositories {
@@ -300,7 +300,7 @@ check {
   dependsOn project.tasks.dependencyCheckAnalyze
 }
 
-configurations.all {
+configurations.configureEach {
   exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
 }
 
