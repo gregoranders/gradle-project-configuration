@@ -208,7 +208,7 @@ class ProjectConfigurationPluginSpec extends Specification {
                 .build()
         then: 'a exception is thrown'
             UnexpectedBuildFailure exception = thrown()
-        and: ''
+        and: 'it contains the expected message'
             exception.getMessage().contains('Copy/Paste analysis found 6')
     }
 
