@@ -24,9 +24,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v3.9.0
+        uses: actions/setup-java@v3.11.0
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           cache: 'gradle'
           java-version: ${{ matrix.java }}
       - name: Echo JAVA_HOME
@@ -34,13 +34,13 @@ jobs:
       - name: Echo JAVA version
         run: java --version
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.2
+        uses: actions/cache@v3.3.1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
-        uses: actions/cache@v3.2.2
+        uses: actions/cache@v3.3.1
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -70,22 +70,22 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           arguments: --info --stacktrace sonarqube
-      - name: Publish Gradle Plugin
-        uses: gradle/gradle-build-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        with:
-          arguments: --info --stacktrace publishPluginMavenPublicationToGitHubPackagesRepository
-      - name: Publish Gradle Plugin Marker
-        uses: gradle/gradle-build-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        with:
-          arguments: --info --stacktrace publishProjectConfigurationPluginPluginMarkerMavenPublicationToGitHubPackagesRepository
+#      - name: Publish Gradle Plugin
+#        uses: gradle/gradle-build-action@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GPG_KEY: ${{ secrets.GPG_KEY }}
+#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#        with:
+#          arguments: --info --stacktrace publishPluginMavenPublicationToGitHubPackagesRepository
+#      - name: Publish Gradle Plugin Marker
+#        uses: gradle/gradle-build-action@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GPG_KEY: ${{ secrets.GPG_KEY }}
+#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#        with:
+#          arguments: --info --stacktrace publishProjectConfigurationPluginPluginMarkerMavenPublicationToGitHubPackagesRepository
       - name: Publish Plugin
         uses: gradle/gradle-build-action@v2
         env:

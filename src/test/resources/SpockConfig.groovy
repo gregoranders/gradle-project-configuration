@@ -30,10 +30,8 @@ report {
 spockReports {
     set 'com.athaydes.spockframework.report.IReportCreator': 'com.athaydes.spockframework.report.template.TemplateReportCreator'
     set 'com.athaydes.spockframework.report.template.TemplateReportCreator.specTemplateFile': '/spockreporttemplates/spec-template.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.reportFileExtension': 'md'
     set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryTemplateFile': '/spockreporttemplates/summary-template.md'
     set 'com.athaydes.spockframework.report.template.TemplateReportCreator.summaryFileName': 'index.md'
-    set 'com.athaydes.spockframework.report.template.TemplateReportCreator.enabled': true
 
     set 'com.athaydes.spockframework.report.aggregatedJsonReportDir': 'build/results/spock'
     set 'com.athaydes.spockframework.report.showCodeBlocks': true
