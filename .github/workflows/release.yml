@@ -89,6 +89,9 @@ jobs:
       - name: Publish Plugin
         uses: gradle/gradle-build-action@v2
         env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_KEY: ${{ secrets.GPG_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PLUGIN_KEY: ${{ secrets.PLUGIN_KEY }}
           PLUGIN_TOKEN: ${{ secrets.PLUGIN_TOKEN }}
