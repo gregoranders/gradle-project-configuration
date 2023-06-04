@@ -70,22 +70,22 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           arguments: --info --stacktrace sonarqube
-      - name: Publish Gradle Plugin
-        uses: gradle/gradle-build-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        with:
-          arguments: --info --stacktrace publishPluginMavenPublicationToGitHubPackagesRepository
-      - name: Publish Gradle Plugin Marker
-        uses: gradle/gradle-build-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        with:
-          arguments: --info --stacktrace publishProjectConfigurationPluginPluginMarkerMavenPublicationToGitHubPackagesRepository
+#      - name: Publish Gradle Plugin
+#        uses: gradle/gradle-build-action@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GPG_KEY: ${{ secrets.GPG_KEY }}
+#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#        with:
+#          arguments: --info --stacktrace publishPluginMavenPublicationToGitHubPackagesRepository
+#      - name: Publish Gradle Plugin Marker
+#        uses: gradle/gradle-build-action@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GPG_KEY: ${{ secrets.GPG_KEY }}
+#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#        with:
+#          arguments: --info --stacktrace publishProjectConfigurationPluginPluginMarkerMavenPublicationToGitHubPackagesRepository
       - name: Publish Plugin
         uses: gradle/gradle-build-action@v2
         env:
